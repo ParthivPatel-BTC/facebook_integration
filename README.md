@@ -35,11 +35,9 @@ rake db:migrate
 
 Step:9 - You need to create an application in facebook to get “App-ID” and “App Secret”
 
-Go to https://developers.facebook.com/
-
-Create an app and get the App id and secret key.
-
-Go to app basic setting and find Website with Facebook Login and enter your site URL -  http://localhost:3000/
+* Go to https://developers.facebook.com/
+* Create an app and get the App id and secret key.
+* Go to app basic setting and find Website with Facebook Login and enter your site URL -  http://localhost:3000/
 
 Step:10 - Declare the provider name and app id and key.
 
