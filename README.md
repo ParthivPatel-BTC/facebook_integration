@@ -7,37 +7,53 @@ gem 'omniauth-facebook'
 Run the “bundle install” command to install the gem.
 
 Step:2 - Define your root url like below
+
 root :to => “home#index”
 
 Step:3 - Run command - rails generate devise:install
+
 This generator will install all Devise configurations.Take a look at them.
 
 Step:4 - Add Devise users models using the generator:
+
 rails generate devise User
+
 This generator creates a few interesting things: a model file, a migration and a devise_for route.
 
 Step:5 - Go the user model “user.rb” and add the following line
+
 devise : omniauthable
 
 Step:6 - Run the migrate command to insert the User table in your database.
+
 rake db:migrate
+
 It’ll insert the Users table with some columns.
 
 Step:7 - You need two more columns to store provider type and userid given from facebook
+
 rails g migration AddProviderToUsers provider:string uid:string
+
 Runt rake db:migrate to insert the columns in users table.
 
 Step:8 - You need to create an application in facebook to get “App-ID” and “App Secret”
+
 https://developers.facebook.com/
+
 Create an app and get the App id and secret key.
+
 Go to app basic setting and find Website with Facebook Login and enter your site URL -  http://localhost:3000/
 
 Step:9 - Declare the provider name and app id and key.
+
 Go to the file config/initializers/devise.rb and the following line
+
 require "omniauth-facebook"
+
 config.omniauth :facebook, "APP_ID", "APP_SECRET"
 
 Step:10 - Change in devise.rb
+
 devise_for :users, :controllers => { : omniauth_callbacks => "omniauth_callbacks" }
 
 Step:11 - Go to your layout file and the following block
