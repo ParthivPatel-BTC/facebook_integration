@@ -1,36 +1,36 @@
 Here is an example to demonstrate how to integrate Facebook connect with devise authentication in a rails 4 app.
 
-#Step:1 - Add the gems in your gem file.
+Step:1 - Add the gems in your gem file.
 gem ‘devise’
 gem 'omniauth'
 gem 'omniauth-facebook' 
 Run the “bundle install” command to install the gem.
-#Step:2 - Define your root url like below
+Step:2 - Define your root url like below
 root :to => “home#index”
-#Step:3 - Run command - rails generate devise:install
+Step:3 - Run command - rails generate devise:install
 This generator will install all Devise configurations.Take a look at them.
-#Step:4 - Add Devise users models using the generator:
+Step:4 - Add Devise users models using the generator:
 rails generate devise User
 This generator creates a few interesting things: a model file, a migration and a devise_for route.
-#Step:5 - Go the user model “user.rb” and add the following line
+Step:5 - Go the user model “user.rb” and add the following line
 devise : omniauthable
-#Step:6 - Run the migrate command to insert the User table in your database.
+Step:6 - Run the migrate command to insert the User table in your database.
 rake db:migrate
 It’ll insert the Users table with some columns.
-#Step:7 - You need two more columns to store provider type and userid given from facebook
+Step:7 - You need two more columns to store provider type and userid given from facebook
 rails g migration AddProviderToUsers provider:string uid:string
 Runt rake db:migrate to insert the columns in users table.
-#Step:8 - You need to create an application in facebook to get “App-ID” and “App Secret”
+Step:8 - You need to create an application in facebook to get “App-ID” and “App Secret”
 https://developers.facebook.com/
 Create an app and get the App id and secret key.
 Go to app basic setting and find Website with Facebook Login and enter your site URL -  http://localhost:3000/
-#Step:9 - Declare the provider name and app id and key.
+Step:9 - Declare the provider name and app id and key.
 Go to the file config/initializers/devise.rb and the following line
 require "omniauth-facebook"
 config.omniauth :facebook, "APP_ID", "APP_SECRET"
-#Step:10 - Change in devise.rb
+Step:10 - Change in devise.rb
 devise_for :users, :controllers => { : omniauth_callbacks => "omniauth_callbacks" }
-#Step:11 - Go to your layout file and the following block
+Step:11 - Go to your layout file and the following block
 ```
 <% if user_signed_in? %>
     Signed in as <%= current_user.name %>. Not you?
@@ -41,7 +41,7 @@ devise_for :users, :controllers => { : omniauth_callbacks => "omniauth_callbacks
 ```
 When the user clicks on Sign in with Facebook link, they will redirects to the Facebook login page, after entering their credentials it will again redirect the user back to the applications Callback method .
 
-#Step:11 - Create a new controller named as “omniauth_callbacks_controller.rb”.Add the following method in it.
+Step:12 - Create a new controller named as “omniauth_callbacks_controller.rb”.Add the following method in it.
 ```
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController   
   def facebook     
@@ -57,7 +57,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 end
 ```
 
-Step:12 - Add the following block in your user model.
+Step:13 - Add the following block in your user model.
 ```
 def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
      user = User.where(:provider => auth.provider, :uid => auth.uid).first
